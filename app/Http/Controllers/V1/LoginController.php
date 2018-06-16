@@ -13,13 +13,17 @@ class LoginController extends Controller {
 	public function __construct()
 	{}
 	
+	/**
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function authentication(Request $request){
 		try {
 			$params = $request->only(['email', 'password']);
 			if(! $token = Auth::attempt($params)){
 				return $this->error('Email or password is wrong.', 401);
 			}
-			
 			return $this->success([
 				'status' => true,
 				'token' => $token,
